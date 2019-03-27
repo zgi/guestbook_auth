@@ -123,10 +123,6 @@ class IzvleciSporociloHandler(BaseHandler):
         sporocilo = Vnos.get_by_id(int(sporocilo_id)).sporocilo
         return self.write(sporocilo)
 
-    def post(self, sporocilo_id):
-        sporocilo = Vnos.get_by_id(int(sporocilo_id))
-        return self.write(sporocilo)
-
 app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler, name='domov'),
     webapp2.Route('/hello', HelloHandler, name='kuca'),
