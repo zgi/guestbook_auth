@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Izbrisana Sporočila{% endblock title %}
+{% block izbrisana_sporocila %}
+
+{% if admin %}
+    <h1>Seznam izbrisanih sporocil</h1>
+    <hr>
+    {% for sporocilo in seznam %}
+        <br>
+        <h3>{{ sporocilo.ime }} {{ sporocilo.priimek }} je
+        {{ sporocilo.nastanek.strftime("%d.%m.%Y") }} ob  {{ sporocilo.nastanek.strftime("%H:%M") }} zapisal:</h3>
+        <h4>{{ sporocilo.sporocilo }}</h4>
+        <p>{{ sporocilo.email }}</p>
+        <button onclick="obnovi({{ sporocilo.key.id() }})">Obnovi</button>
+        <hr>
+    {% endfor %}
+
+<script>
+function obnovi(sporocilo_id) {
+    var potrdi = confirm('Ali želiš obnoviti sporočilo?')
+    console.log(potrdi)
+    if (potrdi == true) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", '/sporocilo/' + sporocilo_id + '/obnovi', true);
+    xhr.send();
+    }
+    else {
+    //do nothing
+    }
+}
+</script>
+{% else %}
+    <h1>Nimaš dostopa!</h1>
+{% endif %}
+
+{% endblock izbrisana_sporocila %}

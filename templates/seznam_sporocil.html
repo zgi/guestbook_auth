@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Sporocila{% endblock title %}
+{% block sporocila %}
+
+    <h1>Seznam sporocil</h1>
+    <hr>
+    {% for sporocilo in seznam %}
+        <br>
+        <h3>{{ sporocilo.ime }} {{ sporocilo.priimek }} je
+        {{ sporocilo.nastanek.strftime("%d.%m.%Y") }} ob  {{ sporocilo.nastanek.strftime("%H:%M") }} zapisal:</h3>
+        <h4>{{ sporocilo.sporocilo }}</h4>
+        <p>{{ sporocilo.email }}</p>
+        {% if admin %}
+            <button onclick="uredi({{ sporocilo.key.id() }})">Uredi</button>
+            <button onclick="izbrisi({{ sporocilo.key.id() }})">Izbrisi</button>
+        {% endif %}
+        <hr>
+    {% endfor %}
+{% if admin %}
+    <script>
+        function izbrisi(sporocilo_id) {
+            var potrdi = confirm('Ali  resnično želiš !IZBRISATI! sporočilo?')
+            if (potrdi == true) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", '/sporocilo/' + sporocilo_id + '/izbrisi', true);
+                xhr.send();
+            }
+            else {
+                return;
+            }
+        }
+
+        function uredi(sporocilo_id) {
+            $.get( "/sporocilo/" + sporocilo_id, function(data){
+            var sporocilo = data;
+            var msg = prompt('Urejanje sporočila', sporocilo)
+            if (msg === null) {
+                return;
+               }
+            else {
+                const Url = '/sporocilo/' + sporocilo_id + '/uredi';
+                const data = {sporocilo: msg}
+                $.post(Url, data, function(data, status){});
+             }
+         });
+     }
+    </script>
+{% endif %}
+
+{% endblock sporocila %}

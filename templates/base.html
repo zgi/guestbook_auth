@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock title %}</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+</head>
+{% if logiran %}
+    <p><a href="{{ logout_url }}">Odjava</a></p>
+    <h1>Knjiga gostov hotela Filton</h1>
+    <ul>
+        <li><a href="/vnos">Vnos sporocila</a></li>
+        <li><a href="/seznam-sporocil">Pregled sporocil</a></li>
+        <li><a href="/izbrisana-sporocila">Izbrisana sporocila</a></li>
+        <li><a href="/">Domov</a></li>
+    </ul>
+    <hr>
+    {% block pozdrav %}{% endblock pozdrav %}
+    {% block vnos %}{% endblock vnos %}
+    {% block sporocila %}{% endblock sporocila %}
+    {% block izbrisana_sporocila %}{% endblock izbrisana_sporocila %}
+{% else %}
+    <h1>Hello anonimna ninja!</h1>
+    <p>Prosim prijavi se: <a href="{{ login_url }}">Login</a></p>
+{% endif %}
+</body>
+</html>
